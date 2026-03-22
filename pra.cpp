@@ -1,108 +1,184 @@
-//1.ÁªìÊûÑ‰ΩìÊéíÂ∫è
-/*#include <iostream>    
-#include <cstdio>
-#include <string>
-#include <algorithm>
-using namespace std;
-const int n = 300;
+//∂‡∏ˆ‘≤«Û∫Õ
+//#include<iostream>
+//#include<iomanip>
 
-struct stu {
-	int id;
-	char name;
-	int chinese_grade;
-	int math_grade;
-}a[n];
-
-bool cmp(stu a, stu b) {
-	if (a.chinese_grade > b.chinese_grade) {
-		return 1;
-	}
-	else if (a.chinese_grade < b.chinese_grade) {
-		return 0;
-	}
-	else {
-		if (a.math_grade > b.math_grade) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
-	}
-}
-
-int main() {
-	int N = 0;
-	cout << "input student num" << endl;
-	cin >> N;
-	if (N > 300) {
-		printf("input N too mach");
-		return 0;
-	}
-	for (int i = 1; i <= N; i++) {
-		cout << "input the " <<  i  <<" student imfo" << endl;
-		cout << "input id:" ;
-		cin >> a[i].id;
-		cout << "input name:"  ;
-		cin >> a[i].name;
-		cout << "input chinese grade:"  ;
-		cin >> a[i].chinese_grade;
-		if (a[i].chinese_grade < 0 || a[i].chinese_grade>100) {
-			cout << "grade error" << endl;
-			return 0;
-		}
-		cout << "input math grade:" ;
-		cin >> a[i].math_grade;
-		if (a[i].math_grade < 0 || a[i].math_grade>100) {
-			cout << "grade error" << endl;
-			return 0;
-		}
-	}	
-	sort(a + 1, a + N + 1, cmp);
-	for (int i = 1; i <= N; i++) {
-		cout << "no." << i << "\nid:" << a[i].id << " name:" << a[i].name << " chinese grade:" << a[i].chinese_grade
-			<< " math grade:" << a[i].math_grade << endl;
-	}
-	return 0;
-}*/
-
-//2.ÂÆö‰πâÂ§ö‰∏™ÂúÜ
-#include<iostream>
-#include<iomanip>
-using namespace std;
+/*using namespace std;  //∆’Õ® ˝◊È
 const double pi = 3.1415;
 
 class circel {
 private:
 	double radius;
 public:
-	circel() : radius(0) {}
+	circel() {
+		radius = 0;
+	}
 	circel(double rads) : radius(rads) {}
-	circel(double rads);
-	double calcArea();
-	double calcPerimeter();
-	double getrads();
+	double area();
+	double sumarea(circel circels[],int n);
 };
-circel::circel(double rads) {
-	radius = rads;
-}
-double circel::calcArea() {
+
+double circel::area() {
 	return pi * radius * radius;
 }
-double circel::calcPerimeter() {
-	return 2 * pi * radius;
+double circel::sumarea(circel circels[], int n) {
+	double sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += circels[i].area();
+	}
+	return sum;
 }
-double circel::getrads() {
-	return radius;
-}
+
 
 int main() {
 	circel c[] = { 1,2,3 };
-	cout << "ÂúÜÁöÑËÆ°ÁÆóÁªìÊûúÔºö" << endl;
-	for (int i = 0; i <3; i++) {
-		cout<<"Á¨¨"<<
-	}
+	double sum = c[0].sumarea(c,3);
+	cout << "‘≤µƒº∆À„Ω·π˚£∫" <<sum<< endl;
+	return 0;
+}*/
 
+//÷∏’Î ˝◊È
+/*using namespace std;
+const double pi = 3.1415;
+
+class circle {
+private:
+	double radius;
+public:
+	circle() {
+		radius = 0;
+	}
+	circle(double rads) : radius(rads) {}
+	double area();
+	double sumarea(circle* circels[], int n);
+};
+circle* create(double rads) {
+	circle* c = new circle(rads);
+	return c;
+}
+double circle::area() {
+	return pi * radius * radius;
+}
+double circle::sumarea(circle* circels[], int n) {
+	double sum = 0;
+	for (int i = 0; i < n; i++) {
+		sum += circels[i]->area();
+	}
+	return sum;
 }
 
+int main() {
+	circle*c[]={create(1),create(2),create(3) };
+	double sum = c[0]->sumarea(c, 3);
+	cout<<"‘≤µƒº∆À„Ω·π˚£∫"<<sum<<endl;
+	return 0;
+}*/
 
+
+//∂‡Ã¨ µœ÷
+#include<iostream>
+#include<cmath>
+#include<vector>
+
+using namespace std;
+const double pi = 3.1415;
+
+
+class shape {
+public:
+	virtual double getArea() const = 0;
+	virtual ~shape() {}
+};
+
+class circle : public shape {
+private:
+	double radius;
+public:
+	circle() {
+		radius = 0;
+	}
+	circle(double r) : radius(r) {}
+	double getArea() const override { return pi * radius * radius; }
+};
+
+class rect :public shape {
+private:
+	double high;
+	double lon;
+public:rect() {
+		high = 0;
+		lon = 0;
+}
+	  rect(double h, double l) : high(h), lon(l) {}
+	double getArea() const override { return high * lon; }
+};
+
+class squ :public shape {
+private:
+	double side;
+public:
+	squ() {
+		side = 0;
+	}
+	squ(double s):side(s){}
+	double getArea() const override { return side * side; }
+
+};
+
+class tri :public shape {
+private:
+	double high;
+	double base;
+public:
+	tri() {
+		high = 0;
+		base = 0;
+	}
+	tri(double h,double b):high(h),base(b){}
+	double getArea() const override { return 0.5 * high * base; }
+};
+
+class ell :public shape {
+	private:
+	double a;
+	double b;
+public:
+	ell() {
+		a = 0;
+		b = 0;
+	}
+	ell(double a,double b) :a(a), b(b){}
+	double getArea() const override { return pi * a * b; }
+};
+
+int main() {
+	shape* shapes[10] = {
+		new circle(1.0),      
+		new circle(2.5),
+		new rect(3.0, 4.0), 
+		new rect(2.0, 5.0),
+		new squ(2.0),      
+		new squ(3.5),
+		new tri(3.0, 6.0),  
+		new tri(4.0, 5.0),
+		new circle(0.5),
+		new rect(1.5, 2.0)
+	};
+
+	double totalArea = 0;
+
+	cout << "∏˜–Œ◊¥√Êª˝¡–±Ì£∫" << endl;
+	for (int i = 0; i < 10; ++i) {
+		double area = shapes[i]->getArea();
+		totalArea += area;
+		cout << "–Œ◊¥ [" << i + 1 << "] √Êª˝: " << area << endl;
+	}
+
+	cout << "\n10∏ˆº∏∫ŒÕº–Œµƒ◊‹√Êª˝∫ÕŒ™: " << totalArea << endl;
+
+	for (int i = 0; i < 10; ++i) {
+		delete shapes[i];
+	}
+
+	return 0;
+}
 
